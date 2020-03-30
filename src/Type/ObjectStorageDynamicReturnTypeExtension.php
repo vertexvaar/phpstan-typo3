@@ -14,6 +14,8 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
+use function substr;
+
 /**
  * Add support for ObjectStorage methods "current" and "next".
  * The target type is fetched by getting the propertyName, calculated by the getter,
@@ -41,7 +43,9 @@ class ObjectStorageDynamicReturnTypeExtension implements DynamicMethodReturnType
 		Scope $scope
 	): Type
 	{
-		if ($methodCall->var instanceof Variable && is_string($methodCall->var->name) && strpos($methodCall->var->name, 'get') === 0) {
+		if ($methodCall->var instanceof Variable && is_string($methodCall->var->name)
+			&& in_array(substr($methodCall->var->name, 0, 3), ['set', 'get'])
+		) {
 			$propertyName = lcfirst(substr($methodCall->var->name, 3));
 
 			$class = $scope->getClassReflection();
