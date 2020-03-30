@@ -1,5 +1,5 @@
 {
-    "name": "saschaegerer/phpstan-typo3",
+    "name": "vertexvaar/phpstan-typo3",
     "description": "TYPO3 CMS class reflection extension for PHPStan",
     "license": ["MIT"],
     "type": "phpstan-extension",
